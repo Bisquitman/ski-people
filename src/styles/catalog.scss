@@ -1,17 +1,48 @@
 .catalog {
+  overflow-x: auto;
+  padding-top: 28px;
+  padding-bottom: 20px;
+
+  @media (min-width: 768px) {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  @media (min-width: 1024px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
   // .catalog__container
   &__container {
   }
   // .catalog__list
   &__list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
   // .catalog__item
   &__item {
   }
   // .catalog__link
   &__link {
+    display: block;
+    color: #969eae;
+    background-color: #eeeff2;
+    border-radius: 32px;
+    border: 1px solid transparent;
+    padding: 9px 14px;
+
+    &:hover:not(.catalog__link_active) {
+      color: #0044f0;
+      border-color: #0044f0;
+    }
+
     // .catalog__link_active
     &_active {
+      background-color: #0044f0;
+      color: #fff;
     }
   }
 }

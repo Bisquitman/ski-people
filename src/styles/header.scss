@@ -1,0 +1,114 @@
+.header {
+  padding: 18px 0 0;
+
+  // .header__container
+  &__container {
+  }
+  // .header__wrapper
+  &__wrapper {
+    display: grid;
+    grid-template-areas:
+      "logo links"
+      "search search";
+    justify-content: space-between;
+    align-items: center;
+    gap: 17px;
+    border-bottom: 1px solid #eeeff2;
+    padding-bottom: 16px;
+
+    @media (min-width: 1024px) {
+      grid-template-areas: "logo search links";
+    }
+  }
+  // .header__logo-link
+  &__logo-link {
+    grid-area: logo;
+  }
+  // .header__logo-image
+  &__logo-image {
+    width: 106px;
+    @media (min-width: 768px) {
+      width: 130px;
+    }
+  }
+  // .header__search
+  &__search {
+    grid-area: search;
+    position: relative;
+    width: 100%;
+    height: 38px;
+
+    @media (min-width: 1024px) {
+      width: 408px;
+    }
+    @media (min-width: 1200px) {
+      width: 514px;
+    }
+  }
+  // .header__search-input
+  &__search-input {
+    width: 100%;
+    height: 100%;
+    padding: 0px 45px 0px 24px;
+    border-radius: 32px;
+    background-color: #eeeff2;
+    border: 1px solid transparent;
+    outline: none;
+
+    &:hover,
+    &:focus-visible,
+    &:focus {
+      border-color: #dfe3eb;
+    }
+
+    &::placeholder {
+      color: #969eae;
+    }
+  }
+  // .header__search-btn
+  &__search-btn {
+    position: absolute;
+    top: 11px;
+    right: 24px;
+
+    &:hover {
+      color: #0044f0;
+    }
+  }
+  // .header__links-list
+  &__links-list {
+    grid-area: links;
+    display: flex;
+    column-gap: 16px;
+
+    @media (min-width: 1024px) {
+      column-gap: 24px;
+    }
+  }
+  // .header__link
+  &__link {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    column-gap: 4px;
+
+    &:hover {
+      color: #0044f0;
+    }
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+  // .header__link-text
+  &__link-text {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+  // .header__link-counter
+  &__link-counter {
+  }
+}

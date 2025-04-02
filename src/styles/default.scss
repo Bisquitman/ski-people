@@ -90,3 +90,41 @@ ul {
     padding: 0 92px;
   }
 }
+
+//========================================================================================================================================================
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  text-align: center;
+  color: #0044f0;
+  outline: none;
+  border: 1px solid #0044f0;
+  border-radius: 32px;
+  width: 100%;
+
+  &:hover {
+    background-color: #0044f0;
+    color: #fff;
+  }
+
+  &:focus-visible,
+  &:active {
+    border-color: #042f9c;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  &_filled {
+    background-color: #0044f0;
+    border: 1px solid #0044f0;
+    color: #fff;
+
+    &:hover {
+      background-color: #0945de;
+    }
+  }
+}

@@ -10,18 +10,6 @@
   }
   // .goods__title
   &__title {
-    font-family: "Inter", sans-serif;
-    font-weight: 900;
-    font-size: 24px;
-    margin-bottom: 1em;
-
-    @media (min-width: 768px) {
-      font-size: 32px;
-    }
-
-    @media (min-width: 1024px) {
-      margin-bottom: 1.25em;
-    }
   }
   // .goods__list
   &__list {

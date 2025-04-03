@@ -33,6 +33,14 @@
     position: absolute;
     top: 12px;
     right: 12px;
+
+    &:hover {
+      svg {
+        path {
+          stroke: #0044f0;
+        }
+      }
+    }
   }
   // .card__info
   &__info {

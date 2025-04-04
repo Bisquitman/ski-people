@@ -27,6 +27,14 @@ body {
   background-color: #fff;
   display: flex;
   flex-direction: column;
+
+  @supports (overflow: clip) {
+    overflow: clip;
+  }
+}
+
+main {
+  flex-grow: 1;
 }
 
 h1,

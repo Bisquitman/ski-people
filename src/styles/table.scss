@@ -1,0 +1,22 @@
+.table {
+  width: 100%;
+  margin-bottom: 24px;
+
+  // .table__row
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eeeff2;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    gap: 8px;
+  }
+  // .table__field
+  &__field {
+    color: #969eae;
+  }
+  // .table__value
+  &__value {
+    text-align: right;
+  }
+}

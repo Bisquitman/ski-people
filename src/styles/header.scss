@@ -1,4 +1,9 @@
 .header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 99;
+
   padding: 18px 0 0;
 
   // .header__container

@@ -8,6 +8,7 @@ import { breadcrumbs } from "../components/Breadcrumbs";
 import { product } from "../components/Product";
 import { cart } from "../components/Cart";
 import { order } from "../components/Order";
+import { notFound } from "../components/NotFound";
 
 const router = new Navigo("/", { linksSelector: 'a[href^="/"]' });
 
@@ -34,8 +35,8 @@ export const initRouter = () => {
       console.log("ORDER");
     })
     .notFound(() => {
-      document.body.append(layoutMain([]));
-      document.querySelector(".main").innerHTML = `<h1 class="title" style="text-align:center;">ERROR 404</h1>`;
+      document.body.append(notFound());
+      // document.querySelector(".main").innerHTML = `<h1 class="title" style="text-align:center;">ERROR 404</h1>`;
       console.log("ERROR 404");
     });
   router.resolve();

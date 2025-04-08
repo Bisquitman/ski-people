@@ -1,6 +1,9 @@
 import { layout } from "./Layout";
+let rendered = false;
 
 export const cart = () => {
+  if (rendered) return "";
+
   const cartEl = document.createElement("section");
   cartEl.classList.add("cart");
 
@@ -65,5 +68,8 @@ export const cart = () => {
     </form>
   `;
   cartEl.append(layout(child, "cart__container"));
+
+  rendered = true;
+
   return cartEl;
 };

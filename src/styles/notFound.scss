@@ -16,7 +16,8 @@
   --header: #7a7a7a;
   --color: #fafafa;
   /*   --lit-header: #46a75e; */
-  --lit-header: #e6e6e6;
+  --lit-header: #0044f0;
+  /*   --lit-header: #e6e6e6; */
   --speed: 2s;
 
   min-height: 100vh;
@@ -28,10 +29,6 @@
   color: var(--color);
   perspective: 1200px;
   overflow: clip;
-
-  // padding-bottom: 50px;
-  // margin-top: 32px;
-  // margin-bottom: -100px;
 }
 
 .link {

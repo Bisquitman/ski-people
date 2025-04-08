@@ -1,6 +1,10 @@
 import { layout } from "./Layout";
 
+let rendered = false;
+
 export const product = (titleText) => {
+  if (rendered) return "";
+
   const productEl = document.createElement("section");
   productEl.classList.add("product");
 
@@ -119,5 +123,8 @@ export const product = (titleText) => {
     </div>
   `;
   productEl.append(layout(child, "product__container"));
+
+  rendered = true;
+
   return productEl;
 };

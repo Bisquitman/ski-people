@@ -1,6 +1,10 @@
 import { layout } from "./Layout";
 
+let rendered = false;
+
 export const order = () => {
+  if (rendered) return "";
+
   const orderEl = document.createElement("section");
   orderEl.classList.add("order");
 
@@ -42,5 +46,8 @@ export const order = () => {
     </div>
   `;
   orderEl.append(layout(child, "order__container"));
+
+  rendered = true;
+
   return orderEl;
 };

@@ -1,6 +1,9 @@
 import { layout } from "./Layout";
+let rendered = false;
 
 export const footer = () => {
+  if (rendered) return "";
+
   const footerEl = document.createElement("footer");
   footerEl.classList.add("footer");
 
@@ -60,6 +63,9 @@ export const footer = () => {
   `;
 
   footerEl.append(layout(child, "footer__container"));
+  document.body.append(footerEl);
+
+  rendered = true;
 
   return footerEl;
 };

@@ -1,8 +1,27 @@
 import { layout } from "./Layout";
 
-export const catalog = () => {
+let rendered = false;
+
+export const catalog = (data = [], parent) => {
+  if (rendered) return document.querySelector(".catalog");
+
   const catalogEl = document.createElement("div");
   catalogEl.classList.add("catalog");
+
+  const typeList = [];
+  data.map(({ type }) => typeList.push(type));
+
+  let catalogItem = "";
+
+  [...new Set(typeList)].forEach((item) => {
+    catalogItem += `
+      <li class="catalog__item">
+        <a class="catalog__link" href="#">
+          ${item}
+        </a>
+      </li>
+    `;
+  });
 
   const child = `
     <ul class="catalog__list">
@@ -11,28 +30,13 @@ export const catalog = () => {
           Все
         </a>
       </li>
-      <li class="catalog__item">
-        <a class="catalog__link" href="#">
-          Лыжи
-        </a>
-      </li>
-      <li class="catalog__item">
-        <a class="catalog__link" href="#">
-          Сноуборды
-        </a>
-      </li>
-      <li class="catalog__item">
-        <a class="catalog__link" href="#">
-          Экипировка
-        </a>
-      </li>
-      <li class="catalog__item">
-        <a class="catalog__link" href="#">
-          Ботинки
-        </a>
-      </li>
+      ${catalogItem}
     </ul>
   `;
   catalogEl.append(layout(child, "catalog__container"));
+  parent.append(catalogEl);
+
+  rendered = true;
+
   return catalogEl;
 };

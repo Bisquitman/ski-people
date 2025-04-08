@@ -1,6 +1,10 @@
 import { layout } from "./Layout";
 
+let rendered = false;
+
 export const notFound = () => {
+  if (rendered) return "";
+
   const notFoundEl = document.createElement("section");
   notFoundEl.classList.add("notfound");
 
@@ -18,5 +22,9 @@ export const notFound = () => {
     </div>
   `;
   notFoundEl.append(layout(child));
+  document.body.append(notFoundEl);
+
+  rendered = true;
+
   return notFoundEl;
 };

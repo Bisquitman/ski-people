@@ -1,17 +1,17 @@
 .catalog {
   overflow-x: auto;
-  padding-top: 28px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  // padding-bottom: 20px;
 
-  @media (min-width: 768px) {
-    padding-top: 32px;
-    padding-bottom: 32px;
-  }
+  // @media (min-width: 768px) {
+  //   padding-top: 32px;
+  //   padding-bottom: 32px;
+  // }
 
-  @media (min-width: 1024px) {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
+  // @media (min-width: 1024px) {
+  //   padding-top: 40px;
+  //   padding-bottom: 40px;
+  // }
 
   // .catalog__container
   &__container {

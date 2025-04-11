@@ -35,9 +35,13 @@
     right: 12px;
 
     &:hover {
+      color: #0044f0;
+    }
+    &_active {
+      color: #fff;
       svg {
         path {
-          stroke: #0044f0;
+          fill: #0044f0;
         }
       }
     }

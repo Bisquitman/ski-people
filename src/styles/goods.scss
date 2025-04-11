@@ -21,6 +21,7 @@
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    justify-items: start;
     gap: 32px 8px;
 
     @media (min-width: 768px) {

@@ -10,6 +10,9 @@ import { cart } from "../components/Cart";
 import { order } from "../components/Order";
 import { notFound } from "../components/NotFound";
 import { getData } from "./api";
+import { addFavorite } from "./addFavorite";
+import { localStorageLoad } from "./localStorage";
+import { LS_KEY_FAVORITE } from "./const";
 
 const router = new Navigo("/", { linksSelector: 'a[href^="/"]' });
 
@@ -22,16 +25,17 @@ export const initRouter = () => {
       catalog(goodsList, main());
       goods("", goodsList, main());
       footer();
+      await addFavorite(goodsList);
       console.log("HOME");
     })
     .on("/favorite", async () => {
-      // document.body.append(header(), main([breadcrumbs(), goods("Избранное")]), footer());
       const goodsList = await getData();
       header();
-      breadcrumbs();
-      catalog(goodsList, main());
-      goods("Избранное", goodsList, main());
+      breadcrumbs(main());
+      goods("Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
+      // goods("Избранное", goodsList, main());
       footer();
+      await addFavorite(goodsList);
       console.log("FAVORITE");
     })
     .on("/product", () => {

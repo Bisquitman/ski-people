@@ -1,8 +1,9 @@
 import { layout } from "./Layout";
+import {main} from "./Main.js";
 
 let rendered = false;
 
-export const breadcrumbs = () => {
+export const breadcrumbs = (parent = main()) => {
   if (rendered) return "";
 
   const breadcrumbsEl = document.createElement("div");
@@ -18,6 +19,7 @@ export const breadcrumbs = () => {
     </nav>
   `;
   breadcrumbsEl.append(layout(child, "breadcrumbs__container"));
+  parent.append(breadcrumbsEl);
 
   rendered = true;
 

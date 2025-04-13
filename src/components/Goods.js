@@ -2,10 +2,17 @@ import { IMAGE_API_URL, LS_KEY_FAVORITE } from "../js/const";
 import { layout } from "./Layout";
 import { main } from "./Main";
 import { localStorageLoad } from "../js/localStorage";
+import { router } from "../js/router";
 
 let rendered = false;
 
-export const goods = (title, data, parent = main()) => {
+export const productsList = (action, title = "", data, parent = main()) => {
+  if (action === "remove" && document.querySelector(".goods")) {
+    document.querySelector(".goods").remove();
+    rendered = false;
+    return;
+  }
+
   // console.log("data: ", data);
   if (rendered) return "";
 
@@ -23,7 +30,7 @@ export const goods = (title, data, parent = main()) => {
             <li class="goods__item">
               <article class="goods__card card">
                 <a class="card__link" href="/product?id=${item.id}">
-                  <img class="card__image" src="${IMAGE_API_URL}/${item.image}" title="${item.title}" alt="${item.title}">
+                  <img class="card__image" src="${IMAGE_API_URL}/${item.image}" title="${item.name}" alt="${item.name}">
                 </a>
                 <button class="card__like-btn ${isFavorite(item.id) ? "card__like-btn_active" : ""}" data-id="${item.id}">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +40,7 @@ export const goods = (title, data, parent = main()) => {
                   </svg>
                 </button>
                 <div class="card__info">
-                  <h3 class="card__title">${item.title}</h3>
+                  <h3 class="card__title">${item.name}</h3>
                   <p class="card__price">${item.price}&nbsp;₽</p>
                 </div>
                 <button class="card__btn btn">В корзину</button>
@@ -84,6 +91,7 @@ export const goods = (title, data, parent = main()) => {
         }
 
         list.innerHTML = goodsItem;
+        router.updatePageLinks();
       }
     });
   }

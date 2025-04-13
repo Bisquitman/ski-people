@@ -12,10 +12,10 @@ export const header = () => {
     <div class="header__wrapper">
       <a href="/" class="header__logo-link" title="Перейти на Главную страницу"
         aria-label="Перейти на Главную страницу">
-        <img class="header__logo-image" src="./img/logo.svg" alt="Logo">
+        <img class="header__logo-image" src="/img/logo.svg" alt="Logo">
       </a>
 
-      <form class="header__search" action="#">
+      <form class="header__search" action="">
         <input class="header__search-input" type="search" name="search" placeholder="Введите запрос">
         <button class="header__search-btn" type="submit" title="Найти">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

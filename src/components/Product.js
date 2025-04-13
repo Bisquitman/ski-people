@@ -2,7 +2,13 @@ import { layout } from "./Layout";
 
 let rendered = false;
 
-export const product = (titleText) => {
+export const product = (action, titleText) => {
+  if (action === "remove" && document.querySelector(".product")) {
+    document.querySelector(".product").remove();
+    rendered = false;
+    return;
+  }
+
   if (rendered) return "";
 
   const productEl = document.createElement("section");
@@ -122,7 +128,9 @@ export const product = (titleText) => {
       </div>
     </div>
   `;
+
   productEl.append(layout(child, "product__container"));
+  document.body.append(productEl);
 
   rendered = true;
 

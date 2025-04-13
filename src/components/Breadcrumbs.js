@@ -1,9 +1,15 @@
 import { layout } from "./Layout";
-import {main} from "./Main.js";
+import { main } from "./Main.js";
 
 let rendered = false;
 
-export const breadcrumbs = (parent = main()) => {
+export const breadcrumbs = (action, parent = main()) => {
+  if (action === "remove" && document.querySelector(".breadcrumbs")) {
+    document.querySelector(".breadcrumbs").remove();
+    rendered = false;
+    return;
+  }
+
   if (rendered) return "";
 
   const breadcrumbsEl = document.createElement("div");
@@ -18,8 +24,9 @@ export const breadcrumbs = (parent = main()) => {
       </ul>
     </nav>
   `;
+
   breadcrumbsEl.append(layout(child, "breadcrumbs__container"));
-  parent.append(breadcrumbsEl);
+  parent.prepend(breadcrumbsEl);
 
   rendered = true;
 

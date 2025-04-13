@@ -1,12 +1,19 @@
 import { layout } from "./Layout";
+import { main } from "./Main";
 
 let rendered = false;
 
-export const catalog = (data = [], parent) => {
+export const catalog = (action, data = [], parent = main()) => {
+  if (action === "remove" && document.querySelector(".catalog")) {
+    document.querySelector(".catalog").remove();
+    rendered = false;
+    return;
+  }
+
   if (rendered) return document.querySelector(".catalog");
 
   const catalogEl = document.createElement("div");
-  catalogEl.classList.add("catalog");
+  catalogEl.className = "catalog";
 
   const typeList = [];
   data.map(({ type }) => typeList.push(type));
@@ -33,6 +40,7 @@ export const catalog = (data = [], parent) => {
       ${catalogItem}
     </ul>
   `;
+
   catalogEl.append(layout(child, "catalog__container"));
   parent.append(catalogEl);
 

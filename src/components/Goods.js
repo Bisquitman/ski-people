@@ -41,7 +41,7 @@ export const productsList = (action, title = "", data, parent = main()) => {
                 </button>
                 <div class="card__info">
                   <h3 class="card__title">${item.name}</h3>
-                  <p class="card__price">${item.price}&nbsp;₽</p>
+                  <p class="card__price">${item.price.toLocaleString()}&nbsp;₽</p>
                 </div>
                 <button class="card__btn btn">В корзину</button>
               </article>

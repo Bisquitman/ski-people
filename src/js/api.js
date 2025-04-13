@@ -1,4 +1,5 @@
 import { API_URL } from "./const";
+import { paginationData } from "./paginationData";
 
 export const getData = async (query) => {
   try {
@@ -6,10 +7,13 @@ export const getData = async (query) => {
     const obj = await response.json();
 
     if (query !== "" && query !== undefined && query !== null) {
-      return obj.filter((item) => item.name.toLowerCase() === query.toLowerCase() || item.type.toLowerCase() === query.toLowerCase());
+      const querySearch = obj.filter(
+        (item) => item.name.toLowerCase() === query.toLowerCase() || item.type.toLowerCase() === query.toLowerCase(),
+      );
+      return paginationData(querySearch, 12);
     }
 
-    return obj;
+    return paginationData(obj, 12);
   } catch (e) {
     console.error(e);
   }

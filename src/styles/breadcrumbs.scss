@@ -1,7 +1,7 @@
 .breadcrumbs {
+  color: #969eae;
   padding-top: 10px;
   //padding-bottom: 24px;
-  color: #969eae;
 
   //@media (min-width: 768px) {
   //  padding-top: 32px;
@@ -34,15 +34,16 @@
     &:not(:last-child) {
       &::after {
         content: ">";
-        color: #969eae;
+        // color: #969eae;
       }
     }
 
-    &:hover {
-      color: #0044f0;
-    }
   }
   // .breadcrumbs__link
   &__link {
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: #0044f0;
+    }
   }
 }

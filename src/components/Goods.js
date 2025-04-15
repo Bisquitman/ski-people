@@ -29,7 +29,7 @@ export const productsList = (action, title = "", data, parent = main()) => {
         goodsItem += `
             <li class="goods__item">
               <article class="goods__card card">
-                <a class="card__link" href="/product?id=${item.id}">
+                <a class="card__link" href="/product/${item.id}">
                   <img class="card__image" src="${IMAGE_API_URL}/${item.image}" title="${item.name}" alt="${item.name}">
                 </a>
                 <button class="card__like-btn ${isFavorite(item.id) ? "card__like-btn_active" : ""}" data-id="${item.id}">

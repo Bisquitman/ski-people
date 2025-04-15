@@ -3,7 +3,7 @@ import { main } from "./Main.js";
 
 let rendered = false;
 
-export const breadcrumbs = (action, parent = main()) => {
+export const breadcrumbs = (action, parent = main(), data) => {
   if (action === "remove" && document.querySelector(".breadcrumbs")) {
     document.querySelector(".breadcrumbs").remove();
     rendered = false;
@@ -12,23 +12,25 @@ export const breadcrumbs = (action, parent = main()) => {
 
   if (rendered) return "";
 
-  const breadcrumbsEl = document.createElement("div");
-  breadcrumbsEl.classList.add("breadcrumbs");
+  const el = document.createElement("div");
+  el.classList.add("breadcrumbs");
+
+  const listItems = data
+    .map((item) => `<li class="breadcrumbs__item"><a class="breadcrumbs__link" href="${item.href}">${item.text}</a></li>`)
+    .join("");
 
   const child = `
     <nav class="breadcrumbs__navigation">
       <ul class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Лыжи</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Горные лыжи</a></li>
+        ${listItems}
       </ul>
     </nav>
   `;
 
-  breadcrumbsEl.append(layout(child, "breadcrumbs__container"));
-  parent.prepend(breadcrumbsEl);
+  el.append(layout(child, "breadcrumbs__container"));
+  parent.append(el);
 
   rendered = true;
 
-  return breadcrumbsEl;
+  return el;
 };

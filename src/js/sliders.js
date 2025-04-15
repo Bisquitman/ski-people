@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 
 // init Swiper:
-setTimeout(() => {
+export const slider = () => {
   const productThumbsSlider = new Swiper(".product__slider-thumbs", {
     // configure Swiper to use modules
     modules: [Navigation, Thumbs],
@@ -26,7 +26,7 @@ setTimeout(() => {
     },
   });
 
-  const productSlider = new Swiper(".product__slider-main", {
+  new Swiper(".product__slider-main", {
     modules: [Navigation, Thumbs, EffectFade],
     spaceBetween: 10,
     slidesPerView: 1,
@@ -41,4 +41,4 @@ setTimeout(() => {
       swiper: productThumbsSlider,
     },
   });
-}, 100);
+};

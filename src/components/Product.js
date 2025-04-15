@@ -1,8 +1,9 @@
 import { layout } from "./Layout";
+import { main } from "./Main";
 
 let rendered = false;
 
-export const product = (action, titleText) => {
+export const product = (action, data, parent = main()) => {
   if (action === "remove" && document.querySelector(".product")) {
     document.querySelector(".product").remove();
     rendered = false;
@@ -11,11 +12,11 @@ export const product = (action, titleText) => {
 
   if (rendered) return "";
 
-  const productEl = document.createElement("section");
-  productEl.classList.add("product");
+  const el = document.createElement("section");
+  el.classList.add("product");
 
   const child = `
-    <h2 class="product__title title">${titleText}</h2>
+    <h2 class="product__title title">${data.name}</h2>
 
     <div class="product__description">
       <div class="product__slider">
@@ -80,9 +81,9 @@ export const product = (action, titleText) => {
       </div>
 
       <div class="product__info">
-        <p class="product__info-price">5&nbsp;000&nbsp;&#8381;</p>
+        <p class="product__info-price">${data.price.toLocaleString()}&nbsp;&#8381;</p>
 
-        <p class="product__info-id">арт.&nbsp;84348945757</p>
+        <p class="product__info-id">арт.&nbsp;${data.article}</p>
 
         <div class="product__characteristics">
           <h3 class="product__characteristics-title">Общие характеристики</h3>
@@ -90,27 +91,27 @@ export const product = (action, titleText) => {
           <table class="product__characteristics-table table">
             <tr class="table__row">
               <td class="table__field">Коллекция</td>
-              <td class="table__value">Snow</td>
+              <td class="table__value">${data.collection}</td>
             </tr>
             <tr class="table__row">
               <td class="table__field">Производитель</td>
-              <td class="table__value">Россия</td>
+              <td class="table__value">${data.manufacturer}</td>
             </tr>
             <tr class="table__row">
               <td class="table__field">Гарантия</td>
-              <td class="table__value">18 мес.</td>
+              <td class="table__value">${data.warranty}</td>
             </tr>
             <tr class="table__row">
               <td class="table__field">Срок службы</td>
-              <td class="table__value">5 лет</td>
+              <td class="table__value">${data.life}</td>
             </tr>
             <tr class="table__row">
               <td class="table__field">Цвет</td>
-              <td class="table__value">Синий</td>
+              <td class="table__value">${data.color}</td>
             </tr>
             <tr class="table__row">
               <td class="table__field">Макс. нагрузка</td>
-              <td class="table__value">130 кг</td>
+              <td class="table__value">${data.max_weight}&nbsp;кг</td>
             </tr>
           </table>
 
@@ -129,10 +130,10 @@ export const product = (action, titleText) => {
     </div>
   `;
 
-  productEl.append(layout(child, "product__container"));
-  document.body.append(productEl);
+  el.append(layout(child, "product__container"));
+  parent.append(el);
 
   rendered = true;
 
-  return productEl;
+  return el;
 };

@@ -1,7 +1,7 @@
 export const paginationCount = (data) => {
   try {
     const buttons = document.querySelectorAll(".count-pagination__btn");
-    const maxCount = data.length;
+    const maxCount = data?.length;
     let currentCount = 0;
 
     const paginationActiveElements = (index) => {

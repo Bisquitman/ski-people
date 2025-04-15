@@ -17,6 +17,7 @@ import { LS_KEY_FAVORITE } from "./const";
 import { search } from "./search";
 import { paginationCount } from "./paginationCount";
 import { paginationData } from "./paginationData";
+import { slider } from "./sliders";
 
 export const router = new Navigo("/", { linksSelector: 'a[href^="/"]' });
 
@@ -75,7 +76,11 @@ export const initRouter = () => {
       async () => {
         const goods = await getData();
         header();
-        breadcrumbs("", main());
+        breadcrumbs("", main(), [
+          { text: "Главная", href: "/" },
+          { text: "Лыжb", href: "/ski" },
+          { text: "Горные лыжи", href: "/mountain_skies" },
+        ]);
         productsList("", "Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
         search();
         paginationHtml("", paginationData(goods, 12), main());
@@ -96,12 +101,19 @@ export const initRouter = () => {
       },
     )
     .on(
-      "/product",
-      () => {
+      `/product/:id`,
+      async (obj) => {
+        const goods = await getData();
+        const prod = goods.flatMap((arr) => arr).find((prodObj) => prodObj.id === Number(obj.data.id));
         header();
-        breadcrumbs("", main());
-        // slider();
-        product("", "Горные лыжи");
+        breadcrumbs("", main(), [
+          { text: "Главная", href: "/" },
+          { text: "Лыжb", href: "/ski" },
+          { text: "Горные лыжи", href: "/mountain_skies" },
+          { text: prod.name, href: "" },
+        ]);
+        product("", prod, main());
+        slider();
         search();
         footer();
         router.updatePageLinks();
@@ -128,12 +140,19 @@ export const initRouter = () => {
 
       console.log("ORDER");
     })
-    .notFound(() => {
-      document.body.append(notFound());
-      // document.querySelector(".main").innerHTML = `<h1 class="title" style="text-align:center;">ERROR 404</h1>`;
-      router.updatePageLinks();
+    .notFound(
+      () => {
+        notFound();
+        router.updatePageLinks();
 
-      console.log("ERROR 404");
-    });
+        console.log("ERROR 404");
+      },
+      {
+        leave(done) {
+          notFound("remove");
+          done();
+        },
+      },
+    );
   router.resolve();
 };

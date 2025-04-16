@@ -3,11 +3,11 @@ import { LS_KEY_FAVORITE } from "./const";
 
 export const addFavorite = async (data) => {
   const favoriteList = localStorageLoad(LS_KEY_FAVORITE) || [];
-  const list = document.querySelector('.goods__list');
+  const list = document.querySelector(".goods__list") || document.querySelector(".product__characteristics");
 
   if (list) {
     list.addEventListener('click', (e) => {
-      const likeBtn = e.target.closest('.card__like-btn[data-id]');
+      const likeBtn = e.target.closest('.like-btn[data-id]');
 
       if (likeBtn) {
         const id = Number(likeBtn.dataset.id);

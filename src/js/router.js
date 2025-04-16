@@ -78,8 +78,7 @@ export const initRouter = () => {
         header();
         breadcrumbs("", main(), [
           { text: "Главная", href: "/" },
-          { text: "Лыжb", href: "/ski" },
-          { text: "Горные лыжи", href: "/mountain_skies" },
+          { text: "Избранное", href: "/favorite" },
         ]);
         productsList("", "Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
         search();
@@ -101,21 +100,23 @@ export const initRouter = () => {
       },
     )
     .on(
-      `/product/:id`,
-      async (obj) => {
+      `/product`,
+      async (id) => {
         const goods = await getData();
-        const prod = goods.flatMap((arr) => arr).find((prodObj) => prodObj.id === Number(obj.data.id));
+        const obj = goods.flat(Infinity).find((item) => item.id === Number(id.params.id));
+        // console.log("obj: ", obj);
         header();
         breadcrumbs("", main(), [
           { text: "Главная", href: "/" },
-          { text: "Лыжb", href: "/ski" },
-          { text: "Горные лыжи", href: "/mountain_skies" },
-          { text: prod.name, href: "" },
+          { text: obj.collection, href: "" },
+          { text: obj.type, href: "" },
+          { text: obj.name, href: "" },
         ]);
-        product("", prod, main());
+        await product("", obj, main());
         slider();
         search();
         footer();
+        await addFavorite(goods[0]);
         router.updatePageLinks();
 
         console.log("PRODUCT");

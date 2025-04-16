@@ -1,9 +1,12 @@
+import { IMAGE_API_URL, LS_KEY_FAVORITE } from "../js/const";
+import { localStorageLoad } from "../js/localStorage";
 import { layout } from "./Layout";
 import { main } from "./Main";
 
 let rendered = false;
 
-export const product = (action, data, parent = main()) => {
+export const product = async (action, data, parent = main()) => {
+  console.log("data: ", data);
   if (action === "remove" && document.querySelector(".product")) {
     document.querySelector(".product").remove();
     rendered = false;
@@ -12,8 +15,17 @@ export const product = (action, data, parent = main()) => {
 
   if (rendered) return "";
 
+  const favoriteList = localStorageLoad(LS_KEY_FAVORITE);
+
+  const isFavorite = (id) => favoriteList.find((item) => item.id === id);
+
   const el = document.createElement("section");
   el.classList.add("product");
+
+  const mainImages = data.mainImage;
+  const thumbsImages = data.thumbsImage;
+  console.log("mainImages: ", mainImages);
+  console.log("thumbsImages: ", thumbsImages);
 
   const child = `
     <h2 class="product__title title">${data.name}</h2>
@@ -22,24 +34,16 @@ export const product = (action, data, parent = main()) => {
       <div class="product__slider">
         <div class="swiper product__slider-main">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img class="product__slider-image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
+          ${mainImages
+            .map(
+              (image) => `
+              <div class="swiper-slide">
+                <img class="product__slider-image" src="${IMAGE_API_URL}/${image}" />
+              </div>
+            `,
+            )
+            .join("")}
+            
           </div>
           <button type="button" class="product__slider-arrow product__slider-arrow_prev">
             <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,26 +60,18 @@ export const product = (action, data, parent = main()) => {
             </svg>
           </button>
         </div>
+
         <div class="swiper product__slider-thumbs slider-thumbs">
           <div class="swiper-wrapper">
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="/img/photo.jpg" />
-            </div>
-            <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
-              <img class="slider-thumbs__image" src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
+            ${thumbsImages
+              .map(
+                (image) => `
+                <div class="swiper-slide slider-thumbs__item" class="swiper-slide">
+                  <img class="slider-thumbs__image" src="${IMAGE_API_URL}/${image}" />
+                </div>
+              `,
+              )
+              .join("")}
           </div>
         </div>
       </div>
@@ -117,7 +113,9 @@ export const product = (action, data, parent = main()) => {
 
           <div class="product__btns">
             <button type="button" class="product__btn btn btn_filled">В корзину</button>
-            <button type="button" class="product__favorite">
+            <button type="button" class="product__favorite ${
+              isFavorite(data.id) ? "card__like-btn_active" : ""
+            } like-btn" data-id="${data.id}">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M8.41301 13.8733C8.18634 13.9533 7.81301 13.9533 7.58634 13.8733C5.65301 13.2133 1.33301 10.46 1.33301 5.79332C1.33301 3.73332 2.99301 2.06665 5.03967 2.06665C6.25301 2.06665 7.32634 2.65332 7.99967 3.55998C8.67301 2.65332 9.75301 2.06665 10.9597 2.06665C13.0063 2.06665 14.6663 3.73332 14.6663 5.79332C14.6663 10.46 10.3463 13.2133 8.41301 13.8733Z"

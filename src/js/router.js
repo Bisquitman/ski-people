@@ -18,6 +18,7 @@ import { search } from "./search";
 import { paginationCount } from "./paginationCount";
 import { paginationData } from "./paginationData";
 import { slider } from "./sliders";
+import { addCart } from "./addCart";
 
 export const router = new Navigo("/", { linksSelector: 'a[href^="/"]' });
 
@@ -35,7 +36,8 @@ export const initRouter = () => {
         paginationHtml("", goods, main());
         paginationCount(goods);
         footer();
-        await addFavorite(goods[0]);
+        await addFavorite(goods);
+        await addCart(goods);
         router.updatePageLinks();
 
         console.log("HOME");
@@ -52,13 +54,13 @@ export const initRouter = () => {
     .on(
       "/search",
       async (search) => {
-        console.log(search);
+        // console.log(search);
         const goods = await getData(search.params.query);
         header();
-        catalog("", goods, main());
-        productsList("", "", goods, main());
+        catalog("", goods.flat(Infinity), main());
+        productsList("", "", goods.flat(Infinity), main());
         footer();
-        await addFavorite(goods[0]);
+        await addFavorite(goods);
         router.updatePageLinks();
 
         console.log("SEARCH");
@@ -85,7 +87,8 @@ export const initRouter = () => {
         paginationHtml("", paginationData(goods, 12), main());
         paginationCount(localStorageLoad(LS_KEY_FAVORITE));
         footer();
-        await addFavorite(goods[0]);
+        await addFavorite(goods);
+        await addCart(goods);
         router.updatePageLinks();
 
         console.log("FAVORITE");
@@ -116,7 +119,8 @@ export const initRouter = () => {
         slider();
         search();
         footer();
-        await addFavorite(goods[0]);
+        await addFavorite(goods);
+        await addCart(goods);
         router.updatePageLinks();
 
         console.log("PRODUCT");

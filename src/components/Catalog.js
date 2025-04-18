@@ -4,6 +4,7 @@ import { main } from "./Main";
 let rendered = false;
 
 export const catalog = (action, data = [], parent = main()) => {
+  // console.log('data', data);
   if (action === "remove" && document.querySelector(".catalog")) {
     document.querySelector(".catalog").remove();
     rendered = false;

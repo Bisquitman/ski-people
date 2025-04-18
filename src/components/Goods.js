@@ -1,4 +1,4 @@
-import { IMAGE_API_URL, LS_KEY_FAVORITE } from "../js/const";
+import { IMAGE_API_URL, LS_KEY_CART, LS_KEY_FAVORITE } from "../js/const";
 import { layout } from "./Layout";
 import { main } from "./Main";
 import { localStorageLoad } from "../js/localStorage";
@@ -13,10 +13,11 @@ export const productsList = (action, title = "", data, parent = main()) => {
     return;
   }
 
-  console.log("data: ", data);
+  // console.log("data: ", data);
   if (rendered) return "";
 
   const favoriteList = localStorageLoad(LS_KEY_FAVORITE);
+  const cartList = localStorageLoad(LS_KEY_CART);
 
   const isFavorite = (id) => favoriteList.find(item => item.id === id);
 
@@ -25,14 +26,16 @@ export const productsList = (action, title = "", data, parent = main()) => {
   const renderGoodsItem = (data) => {
     goodsItem = "";
     data.forEach((item) => {
-      return (
-        goodsItem += `
+      let inCart = cartList.find(cartItem => cartItem.id === item.id);
+      return (goodsItem += `
           <li class="goods__item">
             <article class="goods__card card">
               <a class="card__link" href="/product?id=${item.id}">
-                <img class="card__image" src="${IMAGE_API_URL}/${item.mainImage[0]}" title="${item.name}" alt="${item.name}">
+                <img class="card__image" src="${IMAGE_API_URL}/${item?.mainImage[0]}" title="${item.name}" alt="${item.name}">
               </a>
-              <button class="card__like-btn ${isFavorite(item.id) ? "card__like-btn_active" : ""} like-btn" data-id="${item.id}">
+              <button class="card__like-btn ${isFavorite(item.id) ? "card__like-btn_active" : ""} like-btn" data-id="${
+        item.id
+      }">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M8.41301 13.8733C8.18634 13.9533 7.81301 13.9533 7.58634 13.8733C5.65301 13.2133 1.33301 10.46 1.33301 5.79332C1.33301 3.73332 2.99301 2.06665 5.03967 2.06665C6.25301 2.06665 7.32634 2.65332 7.99967 3.55998C8.67301 2.65332 9.75301 2.06665 10.9597 2.06665C13.0063 2.06665 14.6663 3.73332 14.6663 5.79332C14.6663 10.46 10.3463 13.2133 8.41301 13.8733Z"
@@ -43,11 +46,10 @@ export const productsList = (action, title = "", data, parent = main()) => {
                 <h3 class="card__title">${item.name}</h3>
                 <p class="card__price">${item.price.toLocaleString()}&nbsp;₽</p>
               </div>
-              <button class="card__btn btn">В корзину</button>
+              <button class="card__btn btn" data-id="${item.id}" ${inCart ? 'disabled' : ''}>${inCart ? 'Уже в корзине' : 'В корзину'}</button>
             </article>
           </li>
-        `
-      );
+        `);
     });
   };
 

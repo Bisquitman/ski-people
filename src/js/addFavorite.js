@@ -11,7 +11,7 @@ export const addFavorite = async (data) => {
 
       if (likeBtn) {
         const id = Number(likeBtn.dataset.id);
-        const item = data.find(item => item.id === id);
+        const item = data.flat(Infinity).find(item => item.id === id);
 
         // if (favoriteList.length === 0) {
         //   favoriteList.push(item);

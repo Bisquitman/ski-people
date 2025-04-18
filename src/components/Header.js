@@ -1,8 +1,12 @@
 import { layout } from "./Layout";
+import { localStorageLoad } from "../js/localStorage";
+import { LS_KEY_CART } from "../js/const";
 
 let rendered = false;
 
 export const header = () => {
+  const cartList = localStorageLoad(LS_KEY_CART);
+
   if (rendered) return "";
 
   const headerEl = document.createElement("header");
@@ -39,7 +43,7 @@ export const header = () => {
         </a>
         <a class="header__link" href="/cart">
           <span class="header__link-text">Корзина</span>
-          <span class="header__link-counter">(0)</span>
+          <span class="header__link-counter">(${cartList.length})</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.87329 1.33337L3.45996 3.75337" stroke="currentColor" stroke-miterlimit="10"
               stroke-linecap="round" stroke-linejoin="round" />

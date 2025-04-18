@@ -1,4 +1,4 @@
-import { IMAGE_API_URL, LS_KEY_FAVORITE } from "../js/const";
+import { IMAGE_API_URL, LS_KEY_CART, LS_KEY_FAVORITE } from "../js/const";
 import { localStorageLoad } from "../js/localStorage";
 import { layout } from "./Layout";
 import { main } from "./Main";
@@ -6,7 +6,9 @@ import { main } from "./Main";
 let rendered = false;
 
 export const product = async (action, data, parent = main()) => {
-  console.log("data: ", data);
+  // console.log("data: ", data);
+  const cartList = localStorageLoad(LS_KEY_CART);
+
   if (action === "remove" && document.querySelector(".product")) {
     document.querySelector(".product").remove();
     rendered = false;
@@ -24,8 +26,7 @@ export const product = async (action, data, parent = main()) => {
 
   const mainImages = data.mainImage;
   const thumbsImages = data.thumbsImage;
-  console.log("mainImages: ", mainImages);
-  console.log("thumbsImages: ", thumbsImages);
+  let inCart = (id) => cartList.find(cartItem => cartItem.id === id);
 
   const child = `
     <h2 class="product__title title">${data.name}</h2>
@@ -112,7 +113,7 @@ export const product = async (action, data, parent = main()) => {
           </table>
 
           <div class="product__btns">
-            <button type="button" class="product__btn btn btn_filled">В корзину</button>
+            <button type="button" class="product__btn btn btn_filled" data-id="${data.id}" ${inCart(data.id) ? 'disabled' : ''}>${inCart(data.id) ? 'Уже в корзине' : 'В корзину'}</button>
             <button type="button" class="product__favorite ${
               isFavorite(data.id) ? "card__like-btn_active" : ""
             } like-btn" data-id="${data.id}">

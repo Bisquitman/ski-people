@@ -15,12 +15,16 @@ export const catalog = (action, data = [], parent = main()) => {
   const catalogEl = document.createElement("div");
   catalogEl.className = "catalog";
 
-  const typeList = [];
-  data.map(({ type }) => typeList.push(type));
+  // const typeList = [];
+  // data.map(({ type }) => typeList.push(type));
+
+  const typeList = new Set();
+  data.forEach(({ type }) => {
+    typeList.add(type);
+  });
 
   let catalogItem = "";
-
-  [...new Set(typeList)].forEach((item) => {
+  typeList.forEach((item) => {
     catalogItem += `
       <li class="catalog__item">
         <a class="catalog__link" href="#">
@@ -29,6 +33,16 @@ export const catalog = (action, data = [], parent = main()) => {
       </li>
     `;
   });
+
+  // [...new Set(typeList)].forEach((item) => {
+  //   catalogItem += `
+  //     <li class="catalog__item">
+  //       <a class="catalog__link" href="#">
+  //         ${item}
+  //       </a>
+  //     </li>
+  //   `;
+  // });
 
   const child = `
     <ul class="catalog__list">

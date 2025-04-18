@@ -13,7 +13,7 @@ import { paginationHtml } from "../components/PaginationHtml";
 import { getData } from "./api";
 import { addFavorite } from "./addFavorite";
 import { localStorageLoad } from "./localStorage";
-import { LS_KEY_FAVORITE } from "./const";
+import { LS_KEY_CART, LS_KEY_FAVORITE } from "./const";
 import { search } from "./search";
 import { paginationCount } from "./paginationCount";
 import { paginationData } from "./paginationData";
@@ -129,14 +129,28 @@ export const initRouter = () => {
         },
       },
     )
-    .on("/cart", () => {
-      // document.body.append(header(), main([cart()]), footer());
-      router.updatePageLinks();
+    .on(
+      "/cart",
+      async () => {
+        const goods = await localStorageLoad(LS_KEY_CART);
+        header();
+        cart("Корзина", goods, main());
+        search();
+        footer();
+        router.updatePageLinks();
 
-      console.log("CART");
-    })
+        console.log("CART");
+      },
+      {
+        leave(done) {
+          cart("remove");
+          done();
+        },
+      },
+    )
     .on("/order", () => {
       // document.body.append(header(), main([order()]), footer());
+      order();
       router.updatePageLinks();
 
       console.log("ORDER");

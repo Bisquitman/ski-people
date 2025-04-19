@@ -13,14 +13,15 @@ import { paginationHtml } from "../components/PaginationHtml";
 import { getData } from "./api";
 import { addFavorite } from "./addFavorite";
 import { localStorageLoad } from "./localStorage";
-import { LS_KEY_CART, LS_KEY_FAVORITE } from "./const";
+import { LS_KEY_CART, LS_KEY_FAVORITE, LS_KEY_ORDER } from "./const";
 import { search } from "./search";
 import { paginationCount } from "./paginationCount";
 import { paginationData } from "./paginationData";
 import { slider } from "./sliders";
 import { addCart } from "./addCart";
+import { cartCount } from "./cartCount";
 
-export const router = new Navigo("/", { linksSelector: 'a[href^="/"]' });
+export const router = new Navigo("/", {linksSelector: 'a[href^="/"]'});
 
 export const initRouter = () => {
   router
@@ -79,8 +80,8 @@ export const initRouter = () => {
         const goods = await getData();
         header();
         breadcrumbs("", main(), [
-          { text: "Главная", href: "/" },
-          { text: "Избранное", href: "/favorite" },
+          {text: "Главная", href: "/"},
+          {text: "Избранное", href: "/favorite"},
         ]);
         productsList("", "Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
         search();
@@ -110,10 +111,10 @@ export const initRouter = () => {
         // console.log("obj: ", obj);
         header();
         breadcrumbs("", main(), [
-          { text: "Главная", href: "/" },
-          { text: obj.collection, href: "" },
-          { text: obj.type, href: "" },
-          { text: obj.name, href: "" },
+          {text: "Главная", href: "/"},
+          {text: obj.collection, href: ""},
+          {text: obj.type, href: ""},
+          {text: obj.name, href: ""},
         ]);
         await product("", obj, main());
         slider();
@@ -139,8 +140,9 @@ export const initRouter = () => {
         const goods = await localStorageLoad(LS_KEY_CART);
         header();
         cart("Корзина", goods, main());
-        search();
         footer();
+        search();
+        cartCount(goods);
         router.updatePageLinks();
 
         console.log("CART");
@@ -152,13 +154,23 @@ export const initRouter = () => {
         },
       },
     )
-    .on("/order", () => {
-      // document.body.append(header(), main([order()]), footer());
-      order();
-      router.updatePageLinks();
+    .on("/order", async () => {
+        const data = await localStorageLoad(LS_KEY_ORDER);
+        header();
+        order("", data, main());
+        footer();
+        router.updatePageLinks();
 
-      console.log("ORDER");
-    })
+        console.log("ORDER");
+      },
+      {
+        leave(done) {
+          order("remove");
+          localStorage.removeItem(LS_KEY_ORDER);
+          done();
+        },
+      },
+    )
     .notFound(
       () => {
         notFound();

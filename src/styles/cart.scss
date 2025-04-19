@@ -47,6 +47,7 @@
   &__order {
     grid-area: order;
     padding-top: 24px;
+    padding-bottom: 24px;
 
     @media (min-width: 1024px) {
       padding-top: 0;
@@ -75,7 +76,7 @@
   font-size: 12px;
 
   @media (min-width: 768px) {
-    grid-template-columns: 120px 1fr 1fr;
+    grid-template-columns: 120px 1fr min-content;
     grid-template-areas:
       "image title price"
       "image id price"
@@ -135,6 +136,7 @@
   width: 64px;
   height: 24px;
   // padding: 5px 11px;
+  font-size: 12px;
   text-align: center;
 
   // .counter__minus

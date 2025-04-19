@@ -2,7 +2,7 @@ import { localStorageLoad, localStorageSave } from "./localStorage";
 import { LS_KEY_CART } from "./const";
 
 export const addCart = async (data) => {
-  console.log("data: ", data);
+  // console.log("data: ", data);
   const cartList = localStorageLoad(LS_KEY_CART) || [];
   const list = document.querySelector(".goods__list") || document.querySelector(".product__characteristics");
 
@@ -11,9 +11,9 @@ export const addCart = async (data) => {
       if (e.target.classList.contains("card__btn") || e.target.classList.contains("product__btn")) {
         const cartBtn = e.target;
         const id = Number(cartBtn.dataset.id);
-        console.log("id: ", id);
         const item = data.flat(Infinity).find((item) => item.id === id);
-        console.log("item: ", item);
+
+        item.count = 1;
 
         let isInCart = false;
         cartList.forEach((cartItem, index) => {

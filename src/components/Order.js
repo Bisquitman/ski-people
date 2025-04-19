@@ -4,7 +4,7 @@ import { main } from "./Main";
 let rendered = false;
 
 export const order = (action, data = [], parent = main()) => {
-  // console.log(data);
+  console.log(data);
   const payment =
     {
       "cash": "Наличными при получении",
@@ -27,7 +27,7 @@ export const order = (action, data = [], parent = main()) => {
   const el = document.createElement("section");
   el.classList.add("order");
 
-  if (!data.length) return "";
+  if (data.length === 0) return "";
 
   const child = `
     <div class="order__body">

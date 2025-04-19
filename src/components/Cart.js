@@ -76,7 +76,7 @@ export const cart = (title, cartList = [], parent = main()) => {
           <p class="cart-order__total-price">${totalPrice.toLocaleString()}&nbsp;₽</p>
         </div>
         <p class="cart-order__delivery">Доставка 0&nbsp;₽</p>
-        <button class="cart-order__btn btn btn_filled" type="submit" form="cartForm">Оформить заказ</button>
+        <button class="cart-order__btn btn btn_filled" type="submit" form="cartForm" ${!cartList.length ? "disabled" : ""}>Оформить заказ</button>
       </div>
       <form class="cart__form cart-form" id="cartForm" action="#" method="POST">
         <h3 class="cart-form__title">Данные для доставки</h3>

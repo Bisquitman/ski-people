@@ -4,7 +4,7 @@ import { main } from "./Main";
 let rendered = false;
 
 export const order = (action, data = [], parent = main()) => {
-  console.log(data);
+  // console.log(data);
   const payment =
     {
       "cash": "Наличными при получении",
@@ -66,6 +66,7 @@ export const order = (action, data = [], parent = main()) => {
       <a class="order__btn btn btn_filled" href="/">На главную</a>
     </div>
   `;
+
   el.append(layout(child, "order__container"));
   parent.append(el);
 

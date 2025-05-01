@@ -1,7 +1,10 @@
 export const paginationCount = (data) => {
   try {
+    const maxPagination = data.flat(Infinity).length;
+    const currentPagination = (data, currentCount) => data.slice(0, currentCount + 1).reduce((acc, item) => acc + item.length, 0);
+
     const buttons = document.querySelectorAll(".count-pagination__btn");
-    const maxCount = data?.length;
+    const maxCount = data ? data.length : 0;
     let currentCount = 0;
 
     const paginationActiveElements = (index) => {
@@ -18,7 +21,7 @@ export const paginationCount = (data) => {
       if (currentCount > 0) {
         currentCount--;
         paginationActiveElements(currentCount);
-        console.log("currentCount: ", currentCount);
+        document.querySelector(".count-pagination__text").innerHTML = `${currentPagination(data, Number(currentCount))} из ${maxPagination}`;
       }
     });
 
@@ -26,7 +29,7 @@ export const paginationCount = (data) => {
       if (currentCount < maxCount - 1) {
         currentCount++;
         paginationActiveElements(currentCount);
-        console.log("currentCount: ", currentCount);
+        document.querySelector(".count-pagination__text").innerHTML = `${currentPagination(data, Number(currentCount))} из ${maxPagination}`;
       }
     });
   } catch (error) {

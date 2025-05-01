@@ -3,7 +3,10 @@ import { main } from "./Main";
 
 let rendered = false;
 
-export const paginationHtml = (action, data, parent = main()) => {
+export const paginationHtml = (action, data, parent = main(), pagination) => {
+  const maxPagination = data.flat(Infinity).length;
+  const currentPagination = (data, currentCount) => data.slice(0, currentCount + 1).reduce((acc, item) => acc + item.length, 0);
+
   if (action === "remove" && document.querySelector(".pagination")) {
     document.querySelector(".pagination").remove();
     rendered = false;
@@ -24,7 +27,7 @@ export const paginationHtml = (action, data, parent = main()) => {
     <div class="pagination__count count-pagination">
       <button class="count-pagination__btn">&lt;</button>
       <p class="count-pagination__text">
-        <span>12</span> из <span>31</span>
+        ${currentPagination(data, Number(pagination))} из ${maxPagination}
       </p>
       <button class="count-pagination__btn">&gt;</button>
     </div>

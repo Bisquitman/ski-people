@@ -34,7 +34,7 @@ export const initRouter = () => {
         catalog("", goods[0], main());
         productsList("", "", goods[0], main());
         search();
-        paginationHtml("", goods, main());
+        paginationHtml("", goods, main(), 0);
         paginationCount(goods);
         footer();
         await addFavorite(goods);
@@ -85,7 +85,7 @@ export const initRouter = () => {
         ]);
         productsList("", "Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
         search();
-        paginationHtml("", paginationData(goods, 12), main());
+        paginationHtml("", paginationData(goods, 12), main(), 0);
         paginationCount(localStorageLoad(LS_KEY_FAVORITE));
         footer();
         await addFavorite(goods);

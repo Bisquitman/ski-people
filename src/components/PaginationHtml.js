@@ -3,7 +3,7 @@ import { main } from "./Main";
 
 let rendered = false;
 
-export const paginationHtml = (action, data, parent = main(), pagination) => {
+export const paginationHtml = (action, data, pagination, parent = main()) => {
   const maxPagination = data.flat(Infinity).length;
   const currentPagination = (data, currentCount) => data.slice(0, currentCount + 1).reduce((acc, item) => acc + item.length, 0);
 
@@ -36,7 +36,7 @@ export const paginationHtml = (action, data, parent = main(), pagination) => {
   el.append(layout(child, "pagination__container"));
   parent.append(el);
 
-  document.querySelector(".pagination__item").classList.add("pagination__item_active");
+  document.querySelectorAll(".pagination__item")[pagination].classList.add("pagination__item_active");
 
   rendered = true;
 

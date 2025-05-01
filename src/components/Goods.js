@@ -13,7 +13,6 @@ export const productsList = (action, title = "", data, parent = main()) => {
     return;
   }
 
-  // console.log("data: ", data);
   if (rendered) return "";
 
   const favoriteList = localStorageLoad(LS_KEY_FAVORITE);
@@ -66,7 +65,7 @@ export const productsList = (action, title = "", data, parent = main()) => {
   `;
 
   el.append(layout(child, "goods__container"));
-  parent.append(el);
+  document.querySelector(".pagination") ? parent.insertBefore(el, document.querySelector(".pagination")) : parent.append(el);
 
   rendered = true;
 
@@ -75,13 +74,10 @@ export const productsList = (action, title = "", data, parent = main()) => {
     catalogButton.addEventListener("click", (e) => {
       if (e.target.matches("a")) {
         e.preventDefault();
-        catalogButton.querySelectorAll("a").forEach((btn) => {
-          btn.classList.remove("catalog__link_active");
-        });
+        catalogButton.querySelectorAll("a").forEach((btn) => btn.classList.remove("catalog__link_active"));
         e.target.classList.add("catalog__link_active");
 
         const refreshList = data.filter((item) => item.type.trim() === e.target.textContent.trim());
-        // console.log("refreshList: ", refreshList);
 
         const list = document.querySelector(".goods__list");
         list.textContent = "";

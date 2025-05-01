@@ -27,15 +27,15 @@ export const initRouter = () => {
   router
     .on(
       "/",
-      async () => {
+      async ({ params }) => {
         const goods = await getData();
         paginationData(goods, 12);
         header();
-        catalog("", goods[0], main());
-        productsList("", "", goods[0], main());
+        catalog("", goods[params ? +(params.pagination) : 0], main());
+        productsList("", "", goods[params ? +(params.pagination) : 0], main());
         search();
-        paginationHtml("", goods, main(), 0);
-        paginationCount(goods);
+        paginationHtml("", goods, params ? +(params.pagination) : 0, main());
+        paginationCount(goods, params ? +(params.pagination) : 0);
         footer();
         await addFavorite(goods);
         await addCart(goods);
@@ -86,7 +86,7 @@ export const initRouter = () => {
         productsList("", "Избранное", localStorageLoad(LS_KEY_FAVORITE), main());
         search();
         paginationHtml("", paginationData(goods, 12), main(), 0);
-        paginationCount(localStorageLoad(LS_KEY_FAVORITE));
+        paginationCount(localStorageLoad(LS_KEY_FAVORITE), 12);
         footer();
         await addFavorite(goods);
         await addCart(goods);
